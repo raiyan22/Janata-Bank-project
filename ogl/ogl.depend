@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1667334073 source:c:\users\raiyan\desktop\ogl\main.cpp
+1668977719 source:c:\users\raiyan\desktop\ogl\main.cpp
 	<windows.h>
 	<mmsystem.h>
 	<GL/gl.h>

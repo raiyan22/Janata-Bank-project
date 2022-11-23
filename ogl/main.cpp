@@ -17,7 +17,7 @@ int car_facing = 0;
 double Txval=0,Tyval=0,Tzval=0;
 double windowHeight=1200, windowWidth=1400;
 double gammaa = 0, sun = 0;
-GLfloat alpha = 0.0, theta = 0.0, rot_Angle = 0.0, axis_x=0.0, axis_y=0.0, GM_door_x=-13, floor1_door_x=26, floor2_door_x=26,  car_rot=0, car_x=100, car_z=20 ;
+GLfloat alpha = 0.0, theta = 0.0, rot_Angle = 0.0, axis_x=0.0, axis_y=0.0, GM_door_x=-13, floor1_door_x=26, floor2_door_x=26, main_door_z=15, main_door_right_z=-15,  car_rot=0, car_x=100, car_z=20 ;
 //GLfloat eye_x = 50.0, eye_y = 20.0, eye_z = 50.0;
 //GLfloat lookat_x = 0.0, lookat_y = 0.0, lookat_z = 0.0;
 
@@ -45,7 +45,7 @@ double anglePitch=0,angleYaw=90,angleRoll = 0;
 // light2 = 2nd floor
 // light3 = 1st floor
 GLboolean bRotate = false, uRotate = false, GM_door_open = false, light0 = false,light1=true,light2=false, light3=false, light5=true, zRotate = false;
-GLboolean MAIN_door_open = false, floor1_door_open = false, floor2_door_open = false, fanRot = false, main_door_open = false;
+GLboolean floor1_door_open = false, floor2_door_open = false, main_door_open = false, fanRot = false;
 int pilotPitch=0, pilotYaw=0, pilotRoll=0;
 unsigned int ID,ID1;
 
@@ -268,8 +268,11 @@ void sphereG(GLfloat r=0.3,
     if(emission) glMaterialfv( GL_FRONT, GL_EMISSION, mat_em);
     else glMaterialfv( GL_FRONT, GL_EMISSION, no_mat);
 
+    GLUquadric* qobj;
+    qobj = gluNewQuadric();
+    gluQuadricTexture(qobj,1);
+    gluSphere(qobj,0.1,40,40);
 
-    glutSolidSphere(.1,30,30);
 }
 
 void sphere(GLfloat r=0.3,
@@ -395,6 +398,30 @@ void gold_stack()
 //        up_x = 1.0 * ( sin(rolltheta * PI / (float)180));
 //        up_y = 1.0 * ( cos(rolltheta * PI / (float)180));
 //}
+
+void outer_sphere(GLfloat r,GLfloat g,GLfloat b,GLboolean emission=false)
+{
+    GLfloat no_mat[] = { 0.0, 0.0, 0.0, 1.0 };
+    GLfloat mat_ambient[] = { r, g, b, 1.0 };
+    GLfloat mat_diffuse[] = { r, g, b, 1.0 };
+    GLfloat mat_specular[] = { 1.0, 1.0, 1.0, 1.0 };
+    GLfloat mat_shininess[] = {60};
+
+    GLfloat mat_em[] = {1.0,1.0,1.0,1.0};
+
+    glMaterialfv( GL_FRONT, GL_AMBIENT, mat_ambient);
+    glMaterialfv( GL_FRONT, GL_DIFFUSE, mat_diffuse);
+    glMaterialfv( GL_FRONT, GL_SPECULAR, mat_specular);
+    glMaterialfv( GL_FRONT, GL_SHININESS, mat_shininess);
+    if(emission) glMaterialfv( GL_FRONT, GL_EMISSION, mat_em);
+    else glMaterialfv( GL_FRONT, GL_EMISSION, no_mat);
+
+    GLUquadric* qobj;
+    qobj = gluNewQuadric();
+    gluQuadricTexture(qobj,1);
+    gluSphere(qobj,10,25,25);
+}
+
 void table_help_desk()
 {
 
@@ -1357,14 +1384,14 @@ void display(void)
     ///////////////////////////////////
 
     // FLOOR of 2nd floor
-//    glEnable(GL_TEXTURE_2D);
-//    glPushMatrix();
-//    glTranslatef(0,0,0);
-//    glScalef(40,0.4,65);
-//    glBindTexture(GL_TEXTURE_2D, 1); // 1
-//    cube(1,1,1);
-//    glPopMatrix();
-//    glDisable(GL_TEXTURE_2D);
+    glEnable(GL_TEXTURE_2D);
+    glPushMatrix();
+    glTranslatef(0,0,0);
+    glScalef(40,0.4,65);
+    glBindTexture(GL_TEXTURE_2D, 34); // 1
+    cube(1,1,1);
+    glPopMatrix();
+    glDisable(GL_TEXTURE_2D);
 
     // WALL of vault cashier er back side
 
@@ -1897,6 +1924,13 @@ void display(void)
     cube(1,1,1);
     glPopMatrix();
 
+    // extended FLOOR under the main building
+    glPushMatrix();
+    glTranslatef(-0.5,-25.5,0.5);
+    glScalef(40.5,1.4,66);
+    cube(1,1,1);
+    glPopMatrix();
+
 
     //////////////////////////////////
     ////// 1st floor
@@ -1905,9 +1939,10 @@ void display(void)
     // FLOOR of 1st floor
     glEnable(GL_TEXTURE_2D);
     glPushMatrix();
-    glTranslatef(0,-25,0);
-    glScalef(40,0.4,65);
-    glBindTexture(GL_TEXTURE_2D, 1); // 1
+    glTranslatef(0,-24,0);
+    glRotatef(180, 0,1,0);
+    glScalef(39.9,0.4,64.5);
+    glBindTexture(GL_TEXTURE_2D, 34); // 1
     cube(1,1,1);
     glPopMatrix();
     glDisable(GL_TEXTURE_2D);
@@ -1929,21 +1964,21 @@ void display(void)
 
 
     // BACK WALL
-//    glEnable(GL_TEXTURE_2D);
-//    glPushMatrix();
-//    glTranslatef(-40,0,0);
-//    glScalef(0.4,24,65);
-//    glBindTexture(GL_TEXTURE_2D, 1); // 1
-//    cube(1,1,1);
-//    glPopMatrix();
-//    glDisable(GL_TEXTURE_2D);
+    glEnable(GL_TEXTURE_2D);
+    glPushMatrix();
+    glTranslatef(-40,0,0);
+    glScalef(0.4,24,65);
+    glBindTexture(GL_TEXTURE_2D, 33); // 1
+    cube(1,1,1);
+    glPopMatrix();
+    glDisable(GL_TEXTURE_2D);
 
     // BACK WALL WITH STAIRS
     glEnable(GL_TEXTURE_2D);
     glPushMatrix();
     glTranslatef(-21,0,81-0.4);
     glScalef(0.4,24,15);
-    glBindTexture(GL_TEXTURE_2D, 1); // 1
+    glBindTexture(GL_TEXTURE_2D, 33); // 1
     cube(1,1,1);
     glPopMatrix();
     glDisable(GL_TEXTURE_2D);
@@ -1953,20 +1988,82 @@ void display(void)
 //    glPushMatrix();
 //    glTranslatef(40,0,81-0.4);
 //    glScalef(0.4,24,15);
-//    glBindTexture(GL_TEXTURE_2D, 1); // 1
+//    glBindTexture(GL_TEXTURE_2D, 33); // 1
 //    cube(1,1,1);
 //    glPopMatrix();
 //    glDisable(GL_TEXTURE_2D);
 
-    // FRONT WALL
-//    glEnable(GL_TEXTURE_2D);
-//    glPushMatrix();
-//    glTranslatef(40,0,0);
-//    glScalef(0.4,24,65);
-//    glBindTexture(GL_TEXTURE_2D, 1); // 1
-//    cube(1,1,1);
-//    glPopMatrix();
-//    glDisable(GL_TEXTURE_2D);
+    // FRONT WALL UPPER
+    glEnable(GL_TEXTURE_2D);
+    glPushMatrix();
+    glTranslatef(40,12,0);
+    glScalef(0.4,12,65);
+    glBindTexture(GL_TEXTURE_2D, 33); // 1
+    cube(1,1,1);
+    glPopMatrix();
+    glDisable(GL_TEXTURE_2D);
+
+    // FRONT WALL LOWER
+    glEnable(GL_TEXTURE_2D);
+    glPushMatrix();
+    glTranslatef(40,-12,0+45);
+    glScalef(0.4,12,21);
+    glBindTexture(GL_TEXTURE_2D, 33); // 1
+    cube(1,1,1);
+    glPopMatrix();
+    glDisable(GL_TEXTURE_2D);
+
+    // FRONT WALL LOWER RIGHT
+    glEnable(GL_TEXTURE_2D);
+    glPushMatrix();
+    glTranslatef(40,-12,0-44);
+    glScalef(0.4,12,21);
+    glBindTexture(GL_TEXTURE_2D, 33); // 1
+    cube(1,1,1);
+    glPopMatrix();
+    glDisable(GL_TEXTURE_2D);
+
+    // front deco frame
+    glPushMatrix();
+    glTranslatef(40,-25.5,0.5);
+    glScalef(1.5,1.5,66);
+    cube(1,1,1);
+    glPopMatrix();
+
+    // front deco frame
+    glPushMatrix();
+    glTranslatef(40,0,0.5);
+    glScalef(1.5,1.5,66);
+    cube(1,1,1);
+    glPopMatrix();
+
+    // front deco frame
+    glPushMatrix();
+    glTranslatef(40,23,0.5);
+    glScalef(1.5,1.5,66);
+    cube(1,1,1);
+    glPopMatrix();
+
+    // main door
+    glEnable(GL_TEXTURE_2D);
+    glPushMatrix();
+    glTranslatef(40,-12, main_door_z);              // main door main_door_z //////// between 15 to 35
+    glScalef(0.3,12,15);
+    glBindTexture(GL_TEXTURE_2D, 19); // 1
+    cube(1,1,1);
+    glPopMatrix();
+    glDisable(GL_TEXTURE_2D);
+
+    // main door right
+    glEnable(GL_TEXTURE_2D);
+    glPushMatrix();
+    glTranslatef(40,-12,main_door_right_z);       // between -15 and -35
+    glScalef(0.3,12,15);
+    glBindTexture(GL_TEXTURE_2D, 19); // 1
+    cube(1,1,1);
+    glPopMatrix();
+    glDisable(GL_TEXTURE_2D);
+
 
 
 //    DOOOOOOOR
@@ -1976,7 +2073,7 @@ void display(void)
 //    glTranslatef(floor1_door_x,11.8,-21);
 //    glTranslatef(26,-12.5,65.5-0.4);
     glTranslatef(floor1_door_x,-12.5,65.5-0.4); // between 13 to 26
-    glScalef(8,11,0.5);
+    glScalef(8,11.5,0.5);
     glBindTexture(GL_TEXTURE_2D, 19); // 1
     cube(1,1,1);
     glPopMatrix();
@@ -1988,21 +2085,21 @@ void display(void)
 //    glTranslatef(floor1_door_x,11.8,-21);
 //    glTranslatef(26,-12.5,65.5-0.4);
     glTranslatef(floor2_door_x,12,65.5-0.4); // between 13 to 26
-    glScalef(8,11,0.5);
+    glScalef(8,11.5,0.5);
     glBindTexture(GL_TEXTURE_2D, 19); // 1
     cube(1,1,1);
     glPopMatrix();
     glDisable(GL_TEXTURE_2D);
 
     // LEFT WALL
-//    glEnable(GL_TEXTURE_2D);
+    glEnable(GL_TEXTURE_2D);
     glPushMatrix();
     glTranslatef(-10,0,65);
     glScalef(30,24,0.9);
-//    glBindTexture(GL_TEXTURE_2D, 1); // 1
+    glBindTexture(GL_TEXTURE_2D, 33); // 1
     cube(1,1,1);
     glPopMatrix();
-//    glDisable(GL_TEXTURE_2D);
+    glDisable(GL_TEXTURE_2D);
 
     // LEFT WALL ARTWORK ????????????
     glEnable(GL_TEXTURE_2D);
@@ -2017,21 +2114,22 @@ void display(void)
     glDisable(GL_TEXTURE_2D);
 
     // LEFT WALL DOORSIDE
-//    glEnable(GL_TEXTURE_2D);
+    glEnable(GL_TEXTURE_2D);
     glPushMatrix();
     glTranslatef(37,0,65);
     glScalef(3,24,0.9);
-//    glBindTexture(GL_TEXTURE_2D, 1); // 1
+    glBindTexture(GL_TEXTURE_2D, 33); // 1
     cube(1,1,1);
     glPopMatrix();
-//    glDisable(GL_TEXTURE_2D);
+    glDisable(GL_TEXTURE_2D);
 
     // LEFT WALL INCLUDING STAIRS
+    // JANATA BANK
     glEnable(GL_TEXTURE_2D);
     glPushMatrix();
     glTranslatef(10,-1,95);
     glScalef(30,25,0.4);
-    glBindTexture(GL_TEXTURE_2D, 1); // 1
+    glBindTexture(GL_TEXTURE_2D, 33); // 1
     cube(1,1,1);
     glPopMatrix();
     glDisable(GL_TEXTURE_2D);
@@ -2041,7 +2139,7 @@ void display(void)
     glPushMatrix();
     glTranslatef(0,0,-65);
     glScalef(40,24,0.4);
-    glBindTexture(GL_TEXTURE_2D, 1); // 1
+    glBindTexture(GL_TEXTURE_2D, 33); // 1
     cube(1,1,1);
     glPopMatrix();
     glDisable(GL_TEXTURE_2D);
@@ -2050,14 +2148,83 @@ void display(void)
 
 
     //////////////////////////////////
-    ////// roof
+    ////// roof roof
     //////////////////////////
+    glEnable(GL_TEXTURE_2D);
+    glPushMatrix();
+    glTranslatef(0,24,0);
+    glScalef(40,0.4,65);
+    glBindTexture(GL_TEXTURE_2D, 8); // 1
+    cube(1,1,1);
+    glPopMatrix();
+    glDisable(GL_TEXTURE_2D);
 
-//    glPushMatrix();
-//    glTranslatef(0,24,0);
-//    glScalef(40,0.4,65);
-//    cube(1,1,1);
-//    glPopMatrix();
+    // sb frame top
+    glPushMatrix();
+    glTranslatef(34,48,0);
+    glScalef(1,1,41);
+    cube(1,1,1);
+    glPopMatrix();
+    // sb frame bottom
+    glPushMatrix();
+    glTranslatef(34,40-8,0);
+    glScalef(1,1,41);
+    cube(1,1,1);
+    glPopMatrix();
+
+    // sb frame right
+    glPushMatrix();
+    glTranslatef(34,40,-41);
+    glScalef(1,9,1);
+    cube(1,1,1);
+    glPopMatrix();
+
+    // sb frame left
+    glPushMatrix();
+    glTranslatef(34,40,41);
+    glScalef(1,9,1);
+    cube(1,1,1);
+    glPopMatrix();
+
+    // sign board
+    glEnable(GL_TEXTURE_2D);
+    glPushMatrix();
+    glTranslatef(34,40,0);
+    glScalef(0.6,8,40);
+    glBindTexture(GL_TEXTURE_2D, 8); // 1
+    cube(1,1,1);
+    glPopMatrix();
+    glDisable(GL_TEXTURE_2D);
+
+    // sign board back panel
+    glEnable(GL_TEXTURE_2D);
+    glPushMatrix();
+    glTranslatef(34-0.3,40,0);
+    glScalef(0.6,8,40);
+    glBindTexture(GL_TEXTURE_2D, 9); // 1
+    cube(1,1,1);
+    glPopMatrix();
+    glDisable(GL_TEXTURE_2D);
+
+    // sb frame left stand
+    glEnable(GL_TEXTURE_2D);
+    glPushMatrix();
+    glTranslatef(34,40-13,41-15);
+    glScalef(0.9,5,1);
+    glBindTexture(GL_TEXTURE_2D, 7); // 1
+    cube(1,1,1);
+    glPopMatrix();
+    glDisable(GL_TEXTURE_2D);
+
+    // sb frame left stand
+    glEnable(GL_TEXTURE_2D);
+    glPushMatrix();
+    glTranslatef(34,40-13,-41+15);
+    glScalef(0.9,5,1);
+    glBindTexture(GL_TEXTURE_2D, 7); // 1
+    cube(1,1,1);
+    glPopMatrix();
+    glDisable(GL_TEXTURE_2D);
 
     // ATM with cash
     glPushMatrix();
@@ -2524,18 +2691,15 @@ void display(void)
     sphere( .9,.9,.9);
     glPopMatrix();
 
-
-
-
-
     // outer globe
+    glEnable(GL_TEXTURE_2D);
     glPushMatrix();
     glTranslatef(0,0,0);
-    glScalef(2800*5,2200*5,2800*5);
-    glBindTexture(GL_TEXTURE_2D, 22); // 1
+    glScalef(2800*3,2200*3,2800*3);
+    glBindTexture(GL_TEXTURE_2D, 33); // 1
     sphereG(1,1,1);
     glPopMatrix();
-
+    glDisable(GL_TEXTURE_2D);
 
     /////////////////////////////////////
     //////////// end ////////////////
@@ -2836,6 +3000,11 @@ void myKeyboardFunc( unsigned char key, int x, int y )
         glutPostRedisplay();
         break;
 
+    case 'm':
+        main_door_open = !main_door_open;
+        glutPostRedisplay();
+        break;
+
     //for sun rotate
     case '2':
         zRotate = !zRotate;
@@ -3057,6 +3226,35 @@ void animate()
         }
     }
 
+    if( main_door_open == true)
+    {
+        if(main_door_z < 35)
+        {
+            main_door_z += 0.4;
+        }
+
+        if(main_door_right_z > -33)
+        {
+            main_door_right_z -= 0.4;
+        }
+
+
+    }
+    if (main_door_open == false)
+    {
+        if(main_door_z > 15)
+        {
+            main_door_z -= 0.4;
+        }
+
+
+        if(main_door_right_z < -15)
+        {
+            main_door_right_z += 0.4;
+        }
+    }
+
+
 //    cout << "eye pos "<< eye_x << " " << eye_y << " " << eye_z << endl;
 //    cout << "lookat "<< lookat_x << " " << lookat_y << " " << lookat_z << endl;
 //    cout << "sxsysz "<< sx << " " << sy << " " << sz << endl;
@@ -3129,6 +3327,16 @@ int main (int argc, char **argv)
 
     LoadTexture("C:\\Users\\Raiyan\\Desktop\\ogl\\brick.bmp"); // 31
     LoadTexture("C:\\Users\\Raiyan\\Desktop\\ogl\\starry_night.bmp"); // 32
+
+    LoadTexture("C:\\Users\\Raiyan\\Desktop\\ogl\\n1.bmp"); // 33
+
+    LoadTexture("C:\\Users\\Raiyan\\Desktop\\ogl\\nfloor.bmp"); // 34
+
+    LoadTexture("C:\\Users\\Raiyan\\Desktop\\ogl\\nfloor.bmp"); // 35 // janata bank banner
+
+    LoadTexture("C:\\Users\\Raiyan\\Desktop\\ogl\\nfloor.bmp"); // 36 // janata bank logo side wall
+
+
 
 
     glutKeyboardFunc(myKeyboardFunc);
