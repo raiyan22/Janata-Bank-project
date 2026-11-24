@@ -2,23 +2,23 @@
 
 A 3D model of a Janata Bank branch built with OpenGL and GLUT in C++. The scene includes a two-floor bank interior (cubicles, cashier counter, vault, GM room, ATM), an exterior with a rooftop sign, a road and parking lot, and a drivable car.
 
+## 360° exterior view
+
+![360 degree exterior view](screenshots/exterior-360.gif)
+
 ## Screenshots
 
-| Overview | Exterior |
-|:---:|:---:|
-| ![Overview](screenshots/overview.png) | ![Exterior](screenshots/exterior.png) |
+| Exterior | Exterior (wide) | Overview |
+|:---:|:---:|:---:|
+| ![Exterior](screenshots/exterior.png) | ![Exterior wide](screenshots/exterior-wide.png) | ![Overview](screenshots/overview.png) |
 
-| Ground floor cutaway | Second floor |
-|:---:|:---:|
-| ![Ground floor cutaway](screenshots/cutaway.png) | ![Second floor](screenshots/second-floor.png) |
+| Ground floor cutaway | Second floor | Main doors open |
+|:---:|:---:|:---:|
+| ![Ground floor cutaway](screenshots/cutaway.png) | ![Second floor](screenshots/second-floor.png) | ![Main doors open](screenshots/front-doors.png) |
 
-| Main doors open | Cubicle close-up |
-|:---:|:---:|
-| ![Main doors open](screenshots/front-doors.png) | ![Cubicle close-up](screenshots/cubicle.png) |
-
-| Yellow car | Yellow car (side) |
-|:---:|:---:|
-| ![Yellow car](screenshots/car.png) | ![Yellow car side view](screenshots/car-side.png) |
+| Cubicle close-up | Yellow car | Yellow car (side) |
+|:---:|:---:|:---:|
+| ![Cubicle close-up](screenshots/cubicle.png) | ![Yellow car](screenshots/car.png) | ![Yellow car side view](screenshots/car-side.png) |
 
 ## Controls
 
