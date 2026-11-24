@@ -16,6 +16,10 @@ A 3D model of a Janata Bank branch built with OpenGL and GLUT in C++. The scene 
 |:---:|:---:|
 | ![Main doors open](screenshots/front-doors.png) | ![Cubicle close-up](screenshots/cubicle.png) |
 
+| Yellow car | Yellow car (side) |
+|:---:|:---:|
+| ![Yellow car](screenshots/car.png) | ![Yellow car side view](screenshots/car-side.png) |
+
 ## Controls
 
 | Key | Action |
