@@ -6,6 +6,8 @@ A 3D model of a Janata Bank branch built with OpenGL and GLUT in C++. The scene 
 
 ![360 degree exterior view](screenshots/exterior-360.gif)
 
+[▶ Watch the full-quality video (MP4)](screenshots/exterior-360.mp4)
+
 ## Screenshots
 
 | Exterior | Exterior (wide) | Overview |
@@ -15,10 +17,6 @@ A 3D model of a Janata Bank branch built with OpenGL and GLUT in C++. The scene 
 | Ground floor cutaway | Second floor | Main doors open |
 |:---:|:---:|:---:|
 | ![Ground floor cutaway](screenshots/cutaway.png) | ![Second floor](screenshots/second-floor.png) | ![Main doors open](screenshots/front-doors.png) |
-
-| Cubicle close-up | Yellow car | Yellow car (side) |
-|:---:|:---:|:---:|
-| ![Cubicle close-up](screenshots/cubicle.png) | ![Yellow car](screenshots/car.png) | ![Yellow car side view](screenshots/car-side.png) |
 
 ## Controls
 
